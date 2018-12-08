@@ -11,6 +11,7 @@ Carbon is written as a node server. However, both the frontend and backend plays
 The most important part of Carbon is a **Node VM Instance** to which a 'sandbox context' is passed. The code which the sandbox executes consist of maily two segments:
 * The first Segment is the code written by the user, POSTed from the front-end
 * The second segment is a boilerplate code which contains definitions for the functions, constants and classes which 'emulate' a microcontroller programming language - specifically embedded C (for instance, pinMode function)
+
 The first segment itself can be categorized into two :
 * The design code - which specifies the components involved and their connections
 * The programming code - which dictates the working of the device
