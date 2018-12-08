@@ -1,0 +1,8 @@
+.led-off {
+    fill: #eeeeee;
+}
+
+.led-on {
+    fill: #2222ff;
+    stroke-width: 0;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="codemirror/codemirror.css">
+    
+</head>
+<body>
+    <textarea id="editor"></textarea>
+    <button id="btnsim">Start</button>
+
+    <div>
+        <svg id="simspace" width = "400" height = "400">
+        </svg>
+    </div>
+
+    <script src="jquery.min.js"></script>
+    <script src="codemirror/codemirror.js"></script>
+    <script>
+        var textarea = document.getElementById('editor');
+        var editor = CodeMirror.fromTextArea(textarea, {
+            lineNumbers: true,
+            mode: 'javascript'
+        })
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
