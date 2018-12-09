@@ -9,6 +9,7 @@ const port = 8080
 
 const boilerplate = fs.readFileSync('boilerplate.js')
 var memory = {};
+var code = "";
 
 server.use(express.static('public'))
 server.use(bodyParser.json())
@@ -20,32 +21,15 @@ server.get('/', (req, res) => {
 
 server.post('/sss/design', (req, res) => {
 
-    var data = req.body.source;
-    data += fs.readFileSync('boilerplate.js');
-    
-    const sandbox = {components : [], 
-                    connection: [],
-                    output: [],
-                    step: 0,
-                    memory: {}};
-
-    vm.createContext(sandbox);
-    vm.runInContext(data, sandbox);
-
-    res.send({
-        components: sandbox.components,
-        connections: sandbox.connection
-    });
-})
-
-server.post('/sss/sim', (req, res) => {
+    memory = {};
+    code = "";
 
     var data = req.body.source;
 
     bp_ids = ['delay', 'LOW', 'HIGH', 'digitalWrite', 'digitalRead', 'OUTPUT', 'INPUT', 
                 'pinMode', 'setBoard', 'ArduinoUno', 'LED', 'Sensor', 'Button', 'inputFrom'];
 
-    var code = data; i = 0;
+    code = data; i = 0;
     //refactor the identifiers
     while(i<code.length) {
         ctx = new esrefactor.Context(code);
@@ -73,14 +57,29 @@ server.post('/sss/sim', (req, res) => {
         i++;
     }
 
-    //console.log(code);
+    code += boilerplate;
+    data = code;
 
-    //final += data.substring(old_i);
-    //data = final;
-    //console.log(data);
+    console.log(data);
+    
+    const sandbox = {components : [], 
+                    connection: [],
+                    output: [],
+                    step: 0,
+                    memory: {}};
+
+    vm.createContext(sandbox);
+    vm.runInContext(data, sandbox);
+
+    res.send({
+        components: sandbox.components,
+        connections: sandbox.connection
+    });
+})
+
+server.post('/sss/sim', (req, res) => {
 
     data = code;
-    data += boilerplate;
 
     const sandbox = {components : [], 
                     connection: [],
@@ -91,7 +90,7 @@ server.post('/sss/sim', (req, res) => {
     vm.createContext(sandbox);
     vm.runInContext(data, sandbox);
 
-    //console.log(sandbox.output);
+    console.log(sandbox.output);
     memory = sandbox.memory;
 
     res.send(sandbox.output);
