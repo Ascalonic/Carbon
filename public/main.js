@@ -154,6 +154,7 @@ function build() {
     sim_data = [];
     sim = null;
     output_devices = [];
+    stopTimer();
     
     $.post("sss/design",
     {
@@ -169,7 +170,6 @@ function build() {
 function simulate() {
     $.post("sss/sim",
     {
-        source: editor.getValue(),
         step: step
     },
     function(data, status) {
